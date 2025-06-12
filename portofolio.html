@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smooth Scroll Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      overflow-y: scroll;
+    }
+
+    body {
+      scroll-snap-type: y mandatory;
+      background: linear-gradient(-45deg,#3e2c52, #253542, #29434d, #22423b);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1em 2em;
+      display: flex;
+      justify-content: center; /* Center links */
+      align-items: center;
+      z-index: 1000;
+    }
+
+    nav .links {
+      display: flex;
+      gap: 2em;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.5em;
+      transition: background 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+    }
+
+    section {
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2em;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #about .content, #projects .content, #contact .content {
+      background: transparent;
+      padding: 2em;
+      border-radius: 10px;
+    }
+
+    #about .content p, #projects .content p, #contact .content p {
+      color: #fff;
+    }
+
+    #about .content a, #projects .content a, #contact .content a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.5em;
+      color: #fff;
+    }
+
+    p {
+      max-width: 600px;
+      text-align: center;
+      font-size: 1.2em;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      p {
+        font-size: 1em;
+      }
+
+      nav {
+        flex-direction: column;
+        gap: 1em;
+        padding: 1em;
+      }
+
+      nav .links {
+        flex-direction: column;
+        gap: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="links">
+      <a href="#about">About Me</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section id="about">
+    <div class="content">
+      <h1><center>About Me</center></h1>
+      <p>
+        Hi, my name is Paragkonhs and I am a creative and dedicated web developer/designer with a passion for building clean, user-friendly websites. I love learning new technologies and crafting unique digital experiences.
+      </p>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="content">
+      <h1><center>Projects</center></h1>
+      <p>
+        Here are some of the things I've worked on: portfolio sites, JavaScript apps, React UIs, and responsive design projects. I'm always exploring new tools to level up.
+      </p>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="content">
+      <h1><center>Contact</center></h1>
+      <p>
+        Interested in working together? Reach out to me at <a href="https://mail.google.com/mail/?view=cm&to=paragkonhsweb@gmail.com" target="_blank">paragkonhsweb@gmail.com</a>.
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const sections = document.querySelectorAll("section");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.2 });
+
+    sections.forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
